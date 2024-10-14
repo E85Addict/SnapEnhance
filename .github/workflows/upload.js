@@ -1,5 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
-const program = require('commander');
+const { program } = require('commander');
 
 program
   .option('-t, --token <token>', 'Telegram bot token')
