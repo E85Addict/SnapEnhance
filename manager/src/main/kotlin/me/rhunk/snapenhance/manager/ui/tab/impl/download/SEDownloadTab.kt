@@ -38,7 +38,7 @@ import java.util.Locale
 class SEDownloadTab : Tab("se_download") {
     private fun fetchSEReleases(): List<SEVersion>? {
         return runCatching {
-            val endpoint = Request.Builder().url("https://api.github.com/repos/rhunk/SnapEnhance/releases").build()
+            val endpoint = Request.Builder().url("https://api.github.com/repos/E85Addict/SnapEnhance/releases").build()
             val response = OkHttpClient().newCall(endpoint).execute()
             if (!response.isSuccessful) return null
 

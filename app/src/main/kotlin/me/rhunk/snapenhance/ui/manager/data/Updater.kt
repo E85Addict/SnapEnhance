@@ -14,7 +14,7 @@ object Updater {
     )
 
     private fun fetchLatestRelease() = runCatching {
-        val endpoint = Request.Builder().url("https://api.github.com/repos/rhunk/SnapEnhance/releases").build()
+        val endpoint = Request.Builder().url("https://api.github.com/repos/E85Addict/SnapEnhance/releases").build()
         val response = OkHttpClient().newCall(endpoint).execute()
 
         if (!response.isSuccessful) throw Throwable("Failed to fetch releases: ${response.code}")
@@ -36,12 +36,12 @@ object Updater {
     }.getOrNull()
 
     private fun fetchLatestDebugCI() = runCatching {
-        val actionRuns = OkHttpClient().newCall(Request.Builder().url("https://api.github.com/repos/rhunk/SnapEnhance/actions/runs?event=workflow_dispatch").build()).execute().use {
+        val actionRuns = OkHttpClient().newCall(Request.Builder().url("https://api.github.com/repos/E85Addict/SnapEnhance/actions/runs?event=workflow_dispatch").build()).execute().use {
             if (!it.isSuccessful) throw Throwable("Failed to fetch CI runs: ${it.code}")
             JsonParser.parseString(it.body.string()).asJsonObject
         }
         val debugRuns = actionRuns.getAsJsonArray("workflow_runs")?.mapNotNull { it.asJsonObject }?.filter { run ->
-            run.get("conclusion")?.takeIf { it.isJsonPrimitive }?.asString == "success" && run.getAsJsonPrimitive("path")?.asString == ".github/workflows/debug.yml"
+            run.get("conclusion")?.takeIf { it.isJsonPrimitive }?.asString == "success" && run.getAsJsonPrimitive("path")?.asString == ".github/workflows/personal.yml"
         } ?: throw Throwable("No debug CI runs found")
 
         val latestRun = debugRuns.firstOrNull() ?: throw Throwable("No debug CI runs found")
